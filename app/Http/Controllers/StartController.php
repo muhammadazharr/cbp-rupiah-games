@@ -25,7 +25,12 @@ class StartController extends Controller
             'gender' => $request->gender
         ]);
 
-        return redirect()->route('choose', $pemain->id);
+        return redirect()->route('tutorial', $pemain->id);
+    }
+
+    public function tutorial($user_id)
+    {
+        return view('tutorial', compact('user_id'));
     }
 
     public function choose($user_id)

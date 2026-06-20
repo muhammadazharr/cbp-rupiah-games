@@ -14,7 +14,8 @@ class RupaRupiahController extends Controller
 
     public function question($user_id)
     {
-        return view('RupaRupiah.question', compact('user_id'));
+        $timer = \App\Models\Setting::where('key', 'rupa_rupiah_timer')->first()->value ?? 25;
+        return view('RupaRupiah.question', compact('user_id', 'timer'));
     }
 
     public function result($user_id, $score)
@@ -24,16 +25,18 @@ class RupaRupiahController extends Controller
             'game' => 'Rupa Rupiah',
             'skor' => $score,
         ]);
+
+
         $hasil = ($score / 10) * 100;
         $affirmation = 'Anda Belum Beruntung ';
         $poin = '0 Poin';
-        if ($hasil >= 25 && $hasil < 50) {
+         if ($hasil >= 0 && $hasil < 70) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '1 Poin';
-        } elseif ($hasil >= 50 && $hasil < 100) {
+        } elseif ($hasil >= 70 && $hasil < 100) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '2 Poin';
-        } elseif ($hasil == 100) {
+        } elseif ($hasil >= 100) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '3 Poin';
         }

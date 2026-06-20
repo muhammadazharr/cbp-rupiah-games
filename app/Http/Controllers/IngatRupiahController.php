@@ -14,7 +14,9 @@ class IngatRupiahController extends Controller
 
     public function question($user_id)
     {
-        return view('IngatRupiah.question', compact('user_id'));
+        $memorizeTimer = \App\Models\Setting::where('key', 'ingat_rupiah_memorize_timer')->first()->value ?? 8;
+        $answerTimer = \App\Models\Setting::where('key', 'ingat_rupiah_answer_timer')->first()->value ?? 18;
+        return view('IngatRupiah.question', compact('user_id', 'memorizeTimer', 'answerTimer'));
     }
 
     public function result($user_id, $points)
@@ -27,13 +29,13 @@ class IngatRupiahController extends Controller
         $hasil = ($points / 8) * 100;
         $affirmation = 'Anda Belum Beruntung ';
         $poin = '0 Poin';
-        if ($hasil >= 25 && $hasil < 50) {
+         if ($hasil >= 0 && $hasil < 70) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '1 Poin';
-        } elseif ($hasil >= 50 && $hasil < 100) {
+        } elseif ($hasil >= 70 && $hasil < 100) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '2 Poin';
-        } elseif ($hasil == 100) {
+        } elseif ($hasil >= 100) {
             $affirmation = 'Selamat Anda Mendapatkan ';
             $poin = '3 Poin';
         }

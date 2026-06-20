@@ -1,12 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{RupaRupiahController, IngatRupiahController, StartController, DashboardController, PemainController};
+use App\Http\Controllers\{RupaRupiahController, IngatRupiahController, StartController, DashboardController, PemainController, AdminController};
 
+
+Route::get('/admin/settings', [AdminController::class, 'index'])->name('admin.settings');
+Route::post('/admin/settings', [AdminController::class, 'update'])->name('admin.settings.update');
 
 Route::get('/', [StartController::class, 'index'])->name('start');
 Route::get('/inputBio', [StartController::class, 'inputBio'])->name('inputBio');
 Route::post('/input', [StartController::class, 'input'])->name('input');
+Route::get('/tutorial/{user_id}', [StartController::class, 'tutorial'])->name('tutorial');
 Route::get('/choose/{user_id}', [StartController::class, 'choose'])->name('choose');
 
 Route::get('/RupaRupiah/{user_id}', [RupaRupiahController::class, 'index'])->name('rupa_rupiah');

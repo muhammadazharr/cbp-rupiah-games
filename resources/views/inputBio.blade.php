@@ -2,146 +2,82 @@
 
 @push('style')
     <style>
-        .pixel-button {
-            text-decoration: none;
-            margin-top: 500px;
-            margin-left: 619px;
-            height: 52px;
-            width: 130px;
-            font-family: 'Press Start 2P', sans-serif;
-            /* Font pixelated */
-            font-size: 16px;
-            color: white;
-            background-color: #8b0000;
-            /* Warna merah */
+        .bio-input {
+            background: rgba(255, 193, 7, 0.85);
+            color: #dc3545;
+            font-weight: 700;
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            border-radius: 50px;
             padding: 10px 20px;
-            box-shadow: 0 4px #005f7a, 0 -4px #005f7a inset;
-            text-align: center;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            z-index: 100;
+            transition: all 0.25s ease;
         }
-
-        .pixel-button:hover {
-            transform: scale(1.1);
+        .bio-input:focus {
+            background: rgba(255, 193, 7, 1);
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+            color: #dc3545;
+            outline: none;
         }
-
-        .pixel-button:active {
-            box-shadow: 0 2px #005f7a, 0 -2px #005f7a inset;
-            transform: scale(0.95);
+        .bio-input::placeholder {
+            color: rgba(220, 53, 69, 0.5);
         }
-
-
-
-        .bg-bunga {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .bunga-kiri img,
-        .bunga-tengah img,
-        .bunga-kanan img {
-            animation: rotate 20s linear infinite;
-        }
-
-        .bunga-tengah img {
-            animation-duration: 25s;
+        textarea.bio-input {
+            border-radius: 16px;
         }
     </style>
 @endpush
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mx-auto" style="width: 90vw; position: fixed; left: 100px">
-        <img src="{{ asset('assets/BI_logo.png') }}" width="250px" style="height: max-content" alt="">
-        <img src="{{ asset('assets/CBP_blue_logo.png') }}" width="300px" alt="">
-    </div>
-    <div class="d-flex align-items-center bg-bunga">
-        <div class="bunga-kiri">
-            <img src="{{ asset('assets/bunga-bg.png') }}" alt=""
-                style="width: 800px; position: fixed; top: 170px; left: -400px">
-        </div>
-        <div class="bunga-tengah">
-            <img src="{{ asset('assets/bunga-bg.png') }}" alt=""
-                style="width: 1200px; position: fixed; top: 100px; left: 7%; transform: translateX(-50%)">
-        </div>
-        <div class="bunga-kanan">
-            <img src="{{ asset('assets/bunga-bg.png') }}" alt=""
-                style="width: 800px; position: fixed; top: 170px; right: -400px">
-        </div>
-    </div>
+    <div class="game-container" style="margin-top: 12vh; z-index: 10; padding-bottom: 3rem;">
+        <div class="glass-card">
+            <h3 class="text-center fw-bold text-danger mb-4">Biodata Pemain</h3>
+            <form action="{{ route('input') }}" method="post">
+                @csrf
+                @method('POST')
 
-    <div class="card mx-auto"
-        style="position: relative; top: 100px; width: 75vw; height: 75vh; background: transparent; border:0px; box-shadow: 0 0 20px rgba(0,0,0,0.2);">
-        <div class="card-body pt-5">
-            <div class="d-flex flex-column justify-content-center w-75 mx-auto">
-                <h3 class="text-center w-100 fw-bold text-danger mb-5">Biodata Pemain</h3>
-                <form action="{{ route('input') }}" method="post">
-                    @csrf
-                    @method('POST')
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nameInput" class="form-label fw-bold text-danger">Nama</label>
+                        <input type="text" name="name" required class="form-control bio-input"
+                            id="nameInput" placeholder="Nama lengkap">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="phoneInput" class="form-label fw-bold text-danger">Nomor Telepon</label>
+                        <input type="number" name="phone" required class="form-control bio-input"
+                            id="phoneInput" placeholder="08xxxxxxxxxx">
+                    </div>
+                </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-5 mb-3">
-                            <label for="exampleInputEmail1" class="form-label fw-bold text-danger">Nama</label>
-                            <input type="text" name="name"
-                                class="form-control rounded-pill bg-warning text-danger fw-bold border border-warning"
-                                id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                        <div class="col-5 mb-3">
-                            <label for="exampleInputEmail1" class="form-label fw-bold text-danger">Nomor Telepon</label>
-                            <input type="number" name="phone"
-                                class="form-control rounded-pill bg-warning text-danger fw-bold border border-warning"
-                                id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="addressInput" class="form-label fw-bold text-danger">Alamat</label>
+                        <textarea name="address" id="addressInput" rows="3" required
+                            class="form-control bio-input" placeholder="Alamat lengkap"></textarea>
                     </div>
+                </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-10 mb-3">
-                            <label for="exampleInputEmail1" class="form-label fw-bold text-danger">Alamat</label>
-                            <textarea name="address" id="" cols="" rows="5"
-                                class="form-control bg-warning text-danger fw-bold border border-warning"></textarea>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="ageInput" class="form-label fw-bold text-danger">Umur</label>
+                        <input type="number" name="age" required class="form-control bio-input"
+                            id="ageInput" placeholder="Umur">
                     </div>
-
-                    <div class="row justify-content-center">
-                        <div class="col-5 mb-3">
-                            <label for="exampleInputEmail1" class="form-label fw-bold text-danger">Umur</label>
-                            <input type="number" name="age"
-                                class="form-control rounded-pill bg-warning text-danger fw-bold border border-warning"
-                                id="exampleInputEmail1" aria-describedby="emailHelp">
-                        </div>
-                        <div class="col-5 mb-3">
-                            <label for="exampleInputEmail1" class="form-label fw-bold text-danger">Jenis Kelamin</label>
-                            <select name="gender" id=""
-                                class="form-control rounded-pill bg-warning text-danger fw-bold border border-warning">
-                                <option value="">Jenis Kelamin</option>
-                                <option value="1">Pria</option>
-                                <option value="0">Wanita</option>
-                            </select>
-                        </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="genderSelect" class="form-label fw-bold text-danger">Jenis Kelamin</label>
+                        <select name="gender" id="genderSelect" required class="form-control bio-input">
+                            <option value="">Pilih...</option>
+                            <option value="1">Pria</option>
+                            <option value="0">Wanita</option>
+                        </select>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-10">
-                            <input type="submit" value="Submit"
-                                class="btn btn-warning fw-bold text-danger border border-warning block w-100">
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+                
+                <div class="mt-3">
+                    <button type="submit" class="btn-nusantara w-100 text-center">
+                        SUBMIT
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

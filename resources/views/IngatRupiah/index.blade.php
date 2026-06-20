@@ -1,47 +1,34 @@
 @extends('layout.games')
 @push('style')
     <style>
-        .button-start {
-            position: absolute;
-            top: 63vh;
-            color: #ca2424;
-            font-weight: 900;
-            font-size: 32px;
-            width: 200px;
-            height: 60px;
-            z-index: 1000;
-        }
-
-        .button-start:hover {
-            color: #e02020;
-        }
-
-        .button-start:active {
-            color: #f32424;
-        }
-
         .wave {
             z-index: -1;
             position: absolute;
-            width: 200px;
-            height: 60px;
-            top: 63vh;
-            border: 5px solid;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%);
+            border: 4px solid;
             opacity: 0;
             pointer-events: none;
+            border-radius: 50px;
         }
     </style>
 @endpush
 
 @section('content')
-    <div class="d-flex justify-content-center w-100" style="z-index: 100; position: fixed; margin-top:200px">
-        <img src="{{ asset('assets/ingatRupiah/logo.png') }}" class="mx-auto" alt="">
-    </div>
-    <div class="d-flex justify-content-center">
-        <a id="startButton" href="{{ route('ingat_rupiah.question', $user_id) }}"
-            class="btn btn-warning d-inline rounded-pill px-5 button-start">START</a>
-        <div class="wave rounded-pill"></div>
-        <div class="wave rounded-pill"></div>
+    <div class="game-container text-center" style="margin-top: 12vh; z-index: 10;">
+        <div class="glass-card d-flex flex-column align-items-center py-4">
+            <img src="{{ asset('assets/ingatRupiah/logo.png') }}" class="img-fluid mb-4" style="max-width: 350px;" alt="Ingat Rupiah">
+            
+            <div style="position: relative;">
+                <a id="startButton" href="{{ route('ingat_rupiah.question', $user_id) }}"
+                    class="btn-nusantara" style="font-size: 1.5rem; padding: 16px 60px;">START</a>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -64,11 +51,12 @@
         })
         document.getElementById('startButton').addEventListener('click', function() {
             gsap.to('#startButton', {
-                scale: 1.1,
-                duration: 0.2, // Durasi animasi memperbesar
-                yoyo: true, // Kembalikan ke ukuran awal
-                repeat: 1, // Ulangi sekali
-                ease: "power1.inOut", // Jenis easing
+                scale: 1.05,
+                duration: 0.15,
+                yoyo: true,
+                repeat: 1,
+                ease: "power1.inOut",
+                transformOrigin: "center center",
             });
             document.querySelectorAll('.wave').forEach((wave, index) => {
                 gsap.fromTo(
@@ -77,10 +65,10 @@
                         opacity: 1,
                         color: "#ca2424"
                     }, {
-                        scale: 3,
+                        scale: 2,
                         opacity: 0,
                         duration: 0.8,
-                        delay: index * 0.1, // Memberikan jeda antara gelombang
+                        delay: index * 0.1,
                         ease: "power1.out",
                     }
                 );
